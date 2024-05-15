@@ -10,6 +10,7 @@ import {
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { resolve } from "path";
 
 
 interface Recipe {
@@ -23,6 +24,9 @@ interface Recipe {
 
 async function getRecipes(): Promise<Recipe[]>{
   const result = await fetch(`http://localhost:3001/recipes`)
+
+  // delay response
+  await new Promise((resolve) => setTimeout(resolve, 3000))
 
   return result.json()
 }
@@ -51,8 +55,8 @@ export default async function Home() {
                 <p>{recipes.description}</p>
               </CardContent>
               <CardFooter className="flex justify-between">
-                <Button variant="secondary">View Recipe</Button>
-                {recipes.vegan && <Badge>vegan!!</Badge>}
+                <Button>View Recipe</Button>
+                {recipes.vegan && <Badge variant="secondary">vegan!!</Badge>}
               </CardFooter>
             </Card>
             ))}
